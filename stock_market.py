@@ -164,7 +164,7 @@ if st.sidebar.button('Start'):
                 ndf = pd.DataFrame({'Date' : datelist})
                 ndf = ndf.iloc[n-1:n]
                 
-                st.dataframe(ndf, hide_index=True, column_config={"B": None})
+                st.markdown(ndf.style.set_table_styles([{'selector': 'thead', 'props': [('display', 'none')]}]).to_html(escape=False), unsafe_allow_html=True)
 
 
     else:
