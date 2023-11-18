@@ -38,13 +38,13 @@ for nums in mark.find_all('td', attrs = {"td-right"}):
     x=x+1
     y=y+1
 
-if proc == 'test':
+if proc == 'Test':
     st.sidebar.selectbox('Test type', ('Simple', 'Detailed'),index=0)
 else:
-    None
+    'Z'
 
 if st.sidebar.button('Start'):
-    if proc == 'use':
+    if proc == 'Use':
         for link in mark.find_all('div', attrs = {"logo-container"}):
             photolink = 'https://companiesmarketcap.com'+link.find('img').get('src')
             photolink_list.append('<img src="'+ photolink + '" width="60" >')
@@ -91,7 +91,7 @@ if st.sidebar.button('Start'):
 
         st.markdown(df.to_html(escape=False),unsafe_allow_html=True)
  
-    elif proc == 'test':
+    elif proc == 'Test':
         for code in mark.find_all('div', attrs = {"company-code"}):    
             code_list.append(code.text)
 
