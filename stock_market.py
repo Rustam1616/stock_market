@@ -22,7 +22,7 @@ pred_list = []
 predday = 10
 per = '1y'
 
-proc = st.sidebar.selectbox('select', ('test', 'use'),index=0)
+proc = st.sidebar.selectbox('Select', ('Test', 'Use'),index=0)
 ss = 10
 testdays = 8
 daysbefore = 60
@@ -37,7 +37,13 @@ for nums in mark.find_all('td', attrs = {"td-right"}):
         big_list.append(int(nums))
     x=x+1
     y=y+1
-if st.sidebar.button('start'):
+
+if proc == 'test':
+    st.sidebar.selectbox('Test type', ('Simple', 'Detailed'),index=0)
+else:
+    None
+
+if st.sidebar.button('Start'):
     if proc == 'use':
         for link in mark.find_all('div', attrs = {"logo-container"}):
             photolink = 'https://companiesmarketcap.com'+link.find('img').get('src')
