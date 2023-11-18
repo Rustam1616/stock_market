@@ -163,8 +163,8 @@ if st.sidebar.button('Start'):
                                     datelist.append(rem_time(a - datetime.timedelta(days = daysbefore-predday-d)))
                 ndf = pd.DataFrame({'Date' : datelist})
                 ndf = ndf.iloc[0:n]
-                st.empty()
-                st.markdown(ndf.to_html(escape=False), unsafe_allow_html=True)
+                
+                st.empty().markdown(ndf.to_html(escape=False), unsafe_allow_html=True)
 
 
     else:
