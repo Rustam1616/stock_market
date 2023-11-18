@@ -19,13 +19,12 @@ name_list = []
 country_list = []
 pred_list = []
 
+proc = st.sidebar.selectbox('Select', ('Test', 'Use'),index=0)
 predday = st.sidebar.slider('Sale after days', min_value=1, max_value=30)
 per = '1y'
 
-proc = st.sidebar.selectbox('Select', ('Test', 'Use'),index=0)
 ss = 10
 testdays = 8
-daysbefore = 60
 
 for nums in mark.find_all('td', attrs = {"td-right"}):
     nums = nums.get('data-sort')
@@ -40,6 +39,8 @@ for nums in mark.find_all('td', attrs = {"td-right"}):
 
 if proc == 'Test':
     st.sidebar.selectbox('Test type', ('Simple', 'Detailed'),index=0)
+    daysbefore = st.sidebar.slider('Start test from days before', min_value=predday, max_value=360)
+
 else:
     'Z'
 
