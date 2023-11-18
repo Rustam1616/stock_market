@@ -1,7 +1,6 @@
 requests
 bs4
 pandas
-os
 IPython.core.display
 yfinance
 prophet
