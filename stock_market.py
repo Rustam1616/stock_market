@@ -22,10 +22,10 @@ pred_list = []
 proc = st.sidebar.selectbox('Select', ('Test', 'Use'),index=0)
 
 if proc == 'Test':
-    st.sidebar.selectbox('Test type', ('Simple', 'Detailed'),index=0)
+    ttype = st.sidebar.selectbox('Test type', ('Simple', 'Detailed'),index=0)
     predday = st.sidebar.slider('Sale after days', min_value=1, max_value=30)
     daysbefore = st.sidebar.slider('Start test from days before', min_value=predday, max_value=360)
-    testdays = st.sidebar.slider('How many days in a row to test', min_value=1, max_value=30)
+    testdays = st.sidebar.slider('How many days in a row to test', min_value=1, max_value=360)
 
 else:
     predday = st.sidebar.slider('Sale after days', min_value=1, max_value=30)
@@ -34,7 +34,7 @@ per1 = st.sidebar.slider('Period to analize', min_value=1, max_value=12)
 per2 = st.sidebar.selectbox('', ('y','mo'))
 per = str(per1)+per2
 
-ss = 10
+ss = st.sidebar.slider('Sample size to analize', min_value=5, max_value=99)
 
 for nums in mark.find_all('td', attrs = {"td-right"}):
     nums = nums.get('data-sort')
@@ -147,11 +147,25 @@ if st.sidebar.button('Start'):
             ddf = ddf.sort_values(by=['Country','Gain on 100$ pred'],ascending=False)
             ddf = ddf.head(5)
             note = 'Real gain '+str(daysbefore-predday+1-n)+' days before '+str(round(ddf['Gain on 100$ real'].sum(),2))
-            st.markdown(note)
-            st.markdown('Predicted gain'+ str(round(ddf['Gain on 100$ pred'].sum(),2)))
+            if ttype == 'Detailed':
+                st.markdown(note)
+                st.markdown('Predicted gain'+ str(round(ddf['Gain on 100$ pred'].sum(),2)))
+                st.markdown(ddf.to_html(escape=False), unsafe_allow_html=True)
+            else:
+                import datetime
+                a = datetime.datetime.today()
+                datelist = []
+                def rem_time(d):
+                    s = ''
+                    s = str(d.day) + '.' + str(d.month) + '.' + str(d.year)
+                    return s
+                for d in range (0, testdays):
+                datelist.append(rem_time(a - datetime.timedelta(days = daysbefore-predday-d)))
+                ndf = pd.DataFrame({'Date' : datelist})
+                ndf = ndf.iloc[0:n]
+                st.markdown(ndf.to_html(escape=False), unsafe_allow_html=True)
 
-            st.markdown(ddf.to_html(escape=False), unsafe_allow_html=True)
-            
+
     else:
         print('check')
 else:
