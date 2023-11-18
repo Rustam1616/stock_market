@@ -84,7 +84,7 @@ if st.button('start'):
 
         #st.markdown(HTML(df.to_html(escape=False)),unsafe_allow_html=True)
         #st.markdown(df.to_html(escape=False),unsafe_allow_html=True)
-        st.markdown(yf.Ticker('AAPL').history(period='1mo').to_html(escape=False),unsafe_allow_html=True)
+        st.markdown(yf.Ticker('AAPL').history(period='1mo')[['Close']].to_html(escape=False),unsafe_allow_html=True)
 
     elif proc == 'test':
         for code in mark.find_all('div', attrs = {"company-code"}):    
