@@ -22,7 +22,7 @@ pred_list = []
 predday = 10
 per = '1y'
 
-proc = st.selectbox('select', ('test', 'use'))
+proc = st.sidebar.st.selectbox('select', ('test', 'use'))
 ss = 10
 testdays = 8
 daysbefore = 60
