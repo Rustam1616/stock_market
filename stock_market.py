@@ -82,7 +82,8 @@ if st.button('start'):
         df['Gain on 100$ pred'] = df['Prediction']*100/df['Price']-100
         df = df.sort_values(by=['Country','Gain on 100$ pred'],ascending=False)
 
-        st.markdown(HTML(df.to_html(escape=False)),unsafe_allow_html=True)
+        #st.markdown(HTML(df.to_html(escape=False)),unsafe_allow_html=True)
+        st.markdown(df.to_html(escape=False),unsafe_allow_html=True)
 
     elif proc == 'test':
         for code in mark.find_all('div', attrs = {"company-code"}):    
