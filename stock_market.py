@@ -164,7 +164,7 @@ if st.sidebar.button('Start'):
                 ndf = pd.DataFrame({'Date' : datelist})
                 ndf = ndf.iloc[n-1:n]
                 
-                st.dataframe(ndf, column_config={"B": None})
+                st.dataframe(ndf, hide_index=True, column_config={"B": None})
 
 
     else:
