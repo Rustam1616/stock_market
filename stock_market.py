@@ -83,7 +83,8 @@ if st.button('start'):
         df = df.sort_values(by=['Country','Gain on 100$ pred'],ascending=False)
 
         #st.markdown(HTML(df.to_html(escape=False)),unsafe_allow_html=True)
-        st.markdown(df.to_html(escape=False),unsafe_allow_html=True)
+        #st.markdown(df.to_html(escape=False),unsafe_allow_html=True)
+        st.markdown(yf.Ticker('AAPL').history(period='1mo'))
 
     elif proc == 'test':
         for code in mark.find_all('div', attrs = {"company-code"}):    
