@@ -19,7 +19,7 @@ name_list = []
 country_list = []
 pred_list = []
 
-predday = 10
+predday = st.sidebar.slider('Sale after days', min_value=1, max_value=30)
 per = '1y'
 
 proc = st.sidebar.selectbox('Select', ('Test', 'Use'),index=0)
