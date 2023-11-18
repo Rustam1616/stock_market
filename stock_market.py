@@ -164,8 +164,6 @@ if st.sidebar.button('Start'):
                 for d in range (0, testdays):
                                     datelist.append(rem_time(a - datetime.timedelta(days = daysbefore-predday-d)))
                 ndf = pd.DataFrame({'Date' : datelist})
-                ndf['Gain'] = gain_list
-
                 ndf = ndf.iloc[0:n]
                 ndf['Gain'] = gain_list
                 ndf = ndf.iloc[n-1:n]
