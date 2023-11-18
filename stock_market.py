@@ -64,21 +64,21 @@ if st.button('start'):
         df = df.sample(ss).reset_index()
 
         for cd in df['Code']:
-  #          try:    
-            hist = yf.Ticker(cd)
-            hist = hist.history(period=per)
-            hist = hist[['Close']]
-            hist = hist.reset_index().rename(columns={'Date': 'ds', 'Close': 'y'})
-            hist['ds'] = hist['ds'].dt.tz_localize(None)
-            hist_model = Prophet(interval_width=0.95,yearly_seasonality=True, daily_seasonality=True)
-            hist_model.fit(hist)
-            hist_forecast = hist_model.make_future_dataframe(periods=predday, freq='D')
-            hist_forecast = hist_model.predict(hist_forecast)
-            st.markdown(hist_forecast)
-            pred = round(hist_forecast.tail(1).iloc[(0,1)],ndigits=2)
-            st.markdown(pred)
-#            except:
- #               pred = 0
+            try:    
+                hist = yf.Ticker(cd)
+                hist = hist.history(period=per)
+                hist = hist[['Close']]
+                hist = hist.reset_index().rename(columns={'Date': 'ds', 'Close': 'y'})
+                hist['ds'] = hist['ds'].dt.tz_localize(None)
+                hist_model = Prophet(interval_width=0.95,yearly_seasonality=True, daily_seasonality=True)
+                hist_model.fit(hist)
+                hist_forecast = hist_model.make_future_dataframe(periods=predday, freq='D')
+                hist_forecast = hist_model.predict(hist_forecast)
+                st.markdown(hist_forecast)
+                pred = round(hist_forecast.tail(1).iloc[(0,1)],ndigits=2)
+                st.markdown(pred)
+            except:
+                pred = 0
             pred_list.append(pred)
 
         df['Prediction'] = pred_list
@@ -86,7 +86,7 @@ if st.button('start'):
         df = df.sort_values(by=['Country','Gain on 100$ pred'],ascending=False)
 
         #st.markdown(HTML(df.to_html(escape=False)),unsafe_allow_html=True)
-        #st.markdown(df.to_html(escape=False),unsafe_allow_html=True)
+        st.markdown(df.to_html(escape=False),unsafe_allow_html=True)
  
     elif proc == 'test':
         for code in mark.find_all('div', attrs = {"company-code"}):    
@@ -118,6 +118,7 @@ if st.button('start'):
                     hist = hist.drop(hist.tail(daysbefore-n).index)
                     price_old = round(hist.tail(1).iloc[(0,0)],ndigits=2)
                     hist = hist.reset_index().rename(columns={'Date': 'ds', 'Close': 'y'})
+                    hist['ds'] = hist['ds'].dt.tz_localize(None)
                     hist_model = Prophet(interval_width=0.95,yearly_seasonality=True, daily_seasonality=True)
                     hist_model.fit(hist)
                     hist_forecast = hist_model.make_future_dataframe(periods=predday, freq='D')
