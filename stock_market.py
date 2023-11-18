@@ -66,8 +66,10 @@ if st.button('start'):
         for cd in df['Code']:
             try:    
                 hist = yf.Ticker(cd)
+                st.markdown(hist)
                 hist = hist.history(period=per)
                 hist = hist[['Close']]
+                st.markdown(hist)
                 hist = hist.reset_index().rename(columns={'Date': 'ds', 'Close': 'y'})
                 hist_model = Prophet(interval_width=0.95,yearly_seasonality=True, daily_seasonality=True)
                 hist_model.fit(hist)
