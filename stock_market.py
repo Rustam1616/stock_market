@@ -110,12 +110,12 @@ if st.sidebar.button('Start'):
         df['Name'] = name_list
         df['Country'] = country_list[1::]
         df = df[(df['Country'] == 'USA')]
+        gain_list = []
 
         for n in range(1, 1+testdays):
             pred_list = []
             real_list = []
             price_old_list = []
-            gain_list = []
             ddf = df.sample(ss).reset_index(drop=True) 
             for cd in ddf['Code']:
                 try:    
