@@ -61,7 +61,7 @@ if st.sidebar.button('start'):
         df['Price'] = big_list[2::3]
 
         df = df[(df['Country'] == 'USA')]
-        df = df.sample(ss).reset_index()
+        df = df.sample(ss).reset_index(drop=True)
 
         for cd in df['Code']:
             try:    
