@@ -66,7 +66,6 @@ if st.button('start'):
         for cd in df['Code']:
             try:    
                 hist = yf.Ticker(cd)
-                st.markdown(hist)
                 hist = hist.history(period=per)
                 hist = hist[['Close']]
                 st.markdown(hist)
