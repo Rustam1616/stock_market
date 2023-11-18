@@ -2,7 +2,6 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-import re
 import os
 from IPython.core.display import display,HTML
 import yfinance as yf
