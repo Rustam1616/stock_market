@@ -20,15 +20,15 @@ country_list = []
 pred_list = []
 
 proc = st.sidebar.selectbox('Select', ('Test', 'Use'),index=0)
-predday = st.sidebar.slider('Sale after days', min_value=1, max_value=30)
 
 if proc == 'Test':
     st.sidebar.selectbox('Test type', ('Simple', 'Detailed'),index=0)
+    predday = st.sidebar.slider('Sale after days', min_value=1, max_value=30)
     daysbefore = st.sidebar.slider('Start test from days before', min_value=predday, max_value=360)
     testdays = st.sidebar.slider('How many days in a row to test', min_value=1, max_value=30)
 
 else:
-    q=3
+    predday = st.sidebar.slider('Sale after days', min_value=1, max_value=30)
 
 per1 = st.sidebar.slider('Period to analize', min_value=1, max_value=12)
 per2 = st.sidebar.selectbox('', ('y','mo'))
