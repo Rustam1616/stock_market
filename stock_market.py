@@ -1,3 +1,4 @@
+# %%
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -6,6 +7,7 @@ import os
 from IPython.core.display import display,HTML
 import yfinance as yf
 from prophet import Prophet
+import streamlit as st
 
 mark = BeautifulSoup(requests.get('https://companiesmarketcap.com/').text, 'html.parser')
 
