@@ -37,7 +37,7 @@ for nums in mark.find_all('td', attrs = {"td-right"}):
         big_list.append(int(nums))
     x=x+1
     y=y+1
-if st.siddebar.button('start'):
+if st.sidebar.button('start'):
     if proc == 'use':
         for link in mark.find_all('div', attrs = {"logo-container"}):
             photolink = 'https://companiesmarketcap.com'+link.find('img').get('src')
