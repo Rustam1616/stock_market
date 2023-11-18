@@ -20,11 +20,22 @@ country_list = []
 pred_list = []
 
 proc = st.sidebar.selectbox('Select', ('Test', 'Use'),index=0)
+
+if proc == 'Test':
+    st.sidebar.selectbox('Test type', ('Simple', 'Detailed'),index=0)
+    daysbefore = st.sidebar.slider('Start test from days before', min_value=predday, max_value=360)
+    testdays = st.sidebar.slider('How many days in a row to test', min_value=1, max_value=30)
+
+else:
+    q=3
+
 predday = st.sidebar.slider('Sale after days', min_value=1, max_value=30)
-per = '1y'
+
+per1 = st.sidebar.slider('Period to analize', min_value=1, max_value=12)
+per2 = st.sidebar.selectbox('', ('y','mo'))
+per = str(per1)+per2
 
 ss = 10
-testdays = 8
 
 for nums in mark.find_all('td', attrs = {"td-right"}):
     nums = nums.get('data-sort')
@@ -36,13 +47,6 @@ for nums in mark.find_all('td', attrs = {"td-right"}):
         big_list.append(int(nums))
     x=x+1
     y=y+1
-
-if proc == 'Test':
-    st.sidebar.selectbox('Test type', ('Simple', 'Detailed'),index=0)
-    daysbefore = st.sidebar.slider('Start test from days before', min_value=predday, max_value=360)
-
-else:
-    'Z'
 
 if st.sidebar.button('Start'):
     if proc == 'Use':
