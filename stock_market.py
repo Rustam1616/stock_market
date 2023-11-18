@@ -74,6 +74,7 @@ if st.button('start'):
                 hist_forecast = hist_model.make_future_dataframe(periods=predday, freq='D')
                 hist_forecast = hist_model.predict(hist_forecast)
                 pred = round(hist_forecast.tail(1).iloc[(0,1)],ndigits=2)
+                st.markdown(pred)
             except:
                 pred = 0
             pred_list.append(pred)
@@ -84,8 +85,7 @@ if st.button('start'):
 
         #st.markdown(HTML(df.to_html(escape=False)),unsafe_allow_html=True)
         #st.markdown(df.to_html(escape=False),unsafe_allow_html=True)
-        st.markdown(yf.Ticker('AAPL').history(period='1mo')[['Close']].to_html(escape=False),unsafe_allow_html=True)
-
+ 
     elif proc == 'test':
         for code in mark.find_all('div', attrs = {"company-code"}):    
             code_list.append(code.text)
