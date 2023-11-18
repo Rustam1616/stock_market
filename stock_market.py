@@ -166,6 +166,8 @@ if st.sidebar.button('Start'):
                 ndf = pd.DataFrame({'Date' : datelist})
                 ndf['Gain'] = gain_list
 
+                ndf = ndf.iloc[0:n]
+                ndf['Gain'] = gain_list
                 ndf = ndf.iloc[n-1:n]
                 
                 st.markdown(ndf.style.set_table_styles([{'selector': 'thead', 'props': [('display', 'none')]}]).to_html(escape=False), unsafe_allow_html=True)
