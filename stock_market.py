@@ -83,7 +83,6 @@ if st.button('start'):
         df['Gain on 100$ pred'] = df['Prediction']*100/df['Price']-100
         df = df.sort_values(by=['Country','Gain on 100$ pred'],ascending=False)
 
-        #st.markdown(HTML(df.to_html(escape=False)),unsafe_allow_html=True)
         st.markdown(df.to_html(escape=False),unsafe_allow_html=True)
  
     elif proc == 'test':
@@ -137,10 +136,10 @@ if st.button('start'):
             ddf['Gain on 100$ real'] = ddf['Real']*100/ddf['Price']-100
             ddf = ddf.sort_values(by=['Country','Gain on 100$ pred'],ascending=False)
             ddf = ddf.head(5)
-            print('Real gain',daysbefore-predday+1-n,'days before', ddf['Gain on 100$ real'].sum())
-            print('Predicted gain', ddf['Gain on 100$ pred'].sum())
+            st.markdown('Real gain',daysbefore-predday+1-n,'days before', ddf['Gain on 100$ real'].sum())
+            st.markdown('Predicted gain', ddf['Gain on 100$ pred'].sum())
 
-            display(ddf)
+            st.markdown(ddf)
             
     else:
         print('check')
