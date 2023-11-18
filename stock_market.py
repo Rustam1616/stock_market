@@ -68,8 +68,8 @@ if st.button('start'):
                 hist = yf.Ticker(cd)
                 hist = hist.history(period=per)
                 hist = hist[['Close']]
-                st.markdown(hist)
                 hist = hist.reset_index().rename(columns={'Date': 'ds', 'Close': 'y'})
+                st.markdown(hist)
                 hist_model = Prophet(interval_width=0.95,yearly_seasonality=True, daily_seasonality=True)
                 hist_model.fit(hist)
                 hist_forecast = hist_model.make_future_dataframe(periods=predday, freq='D')
