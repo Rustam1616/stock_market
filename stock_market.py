@@ -136,8 +136,8 @@ if st.button('start'):
             ddf['Gain on 100$ real'] = ddf['Real']*100/ddf['Price']-100
             ddf = ddf.sort_values(by=['Country','Gain on 100$ pred'],ascending=False)
             ddf = ddf.head(5)
-            st.markdown('Real gain',daysbefore-predday+1-n,'days before', ddf['Gain on 100$ real'].sum())
-            st.markdown('Predicted gain', ddf['Gain on 100$ pred'].sum())
+            st.markdown('Real gain'+{daysbefore-predday+1-n}+'days before'+{ddf['Gain on 100$ real'].sum()})
+            #st.markdown('Predicted gain', ddf['Gain on 100$ pred'].sum())
 
             st.markdown(ddf)
             
