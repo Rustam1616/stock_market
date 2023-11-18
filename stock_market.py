@@ -115,6 +115,7 @@ if st.sidebar.button('Start'):
             pred_list = []
             real_list = []
             price_old_list = []
+            gain_list = []
             ddf = df.sample(ss).reset_index(drop=True) 
             for cd in ddf['Code']:
                 try:    
@@ -147,6 +148,7 @@ if st.sidebar.button('Start'):
             ddf = ddf.sort_values(by=['Country','Gain on 100$ pred'],ascending=False)
             ddf = ddf.head(5)
             note = 'Real gain '+str(daysbefore-predday+1-n)+' days before '+str(round(ddf['Gain on 100$ real'].sum(),2))
+            gain_list.append(round(ddf['Gain on 100$ real'].sum()))
             if ttype == 'Detailed':
                 st.markdown(note)
                 st.markdown('Predicted gain'+ str(round(ddf['Gain on 100$ pred'].sum(),2)))
@@ -162,6 +164,8 @@ if st.sidebar.button('Start'):
                 for d in range (0, testdays):
                                     datelist.append(rem_time(a - datetime.timedelta(days = daysbefore-predday-d)))
                 ndf = pd.DataFrame({'Date' : datelist})
+                ndf['Gain'] = gain_list
+
                 ndf = ndf.iloc[n-1:n]
                 
                 st.markdown(ndf.style.set_table_styles([{'selector': 'thead', 'props': [('display', 'none')]}]).to_html(escape=False), unsafe_allow_html=True)
