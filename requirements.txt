@@ -1,0 +1,9 @@
+requests
+bs4
+pandas
+re
+os
+IPython.core.display
+yfinance
+prophet
+streamlit
