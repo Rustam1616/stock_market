@@ -69,11 +69,11 @@ if st.button('start'):
                 hist = hist.history(period=per)
                 hist = hist[['Close']]
                 hist = hist.reset_index().rename(columns={'Date': 'ds', 'Close': 'y'})
-                st.markdown(hist)
                 hist_model = Prophet(interval_width=0.95,yearly_seasonality=True, daily_seasonality=True)
                 hist_model.fit(hist)
                 hist_forecast = hist_model.make_future_dataframe(periods=predday, freq='D')
                 hist_forecast = hist_model.predict(hist_forecast)
+                st.markdown(hist_forecast)
                 pred = round(hist_forecast.tail(1).iloc[(0,1)],ndigits=2)
                 st.markdown(pred)
             except:
