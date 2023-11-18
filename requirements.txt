@@ -6,3 +6,4 @@ os
 IPython.core.display
 yfinance
 prophet
+streamlit
