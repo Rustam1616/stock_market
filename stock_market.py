@@ -111,6 +111,7 @@ if st.sidebar.button('Start'):
         df['Country'] = country_list[1::]
         df = df[(df['Country'] == 'USA')]
         gain_list = []
+        cum_list = []
 
         for n in range(1, 1+testdays):
             pred_list = []
@@ -148,7 +149,8 @@ if st.sidebar.button('Start'):
             ddf = ddf.sort_values(by=['Country','Gain on 100$ pred'],ascending=False)
             ddf = ddf.head(5)
             note = 'Real gain '+str(daysbefore-predday+1-n)+' days before '+str(round(ddf['Gain on 100$ real'].sum(),2))
-            gain_list.append(round(ddf['Gain on 100$ real'].sum()))
+            gain_list.append(round(ddf['Gain on 100$ real'].sum(),2))
+            cum_list.append(sum(gain_list))
             if ttype == 'Detailed':
                 st.markdown(note)
                 st.markdown('Predicted gain'+ str(round(ddf['Gain on 100$ pred'].sum(),2)))
@@ -166,6 +168,7 @@ if st.sidebar.button('Start'):
                 ndf = pd.DataFrame({'Date' : datelist})
                 ndf = ndf.iloc[0:n]
                 ndf['Gain'] = gain_list
+                ndf['Cum'] = cum_list
                 ndf = ndf.iloc[n-1:n]
                 
                 st.markdown(ndf.style.set_table_styles([{'selector': 'thead', 'props': [('display', 'none')]}]).to_html(escape=False), unsafe_allow_html=True)
