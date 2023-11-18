@@ -1,7 +1,7 @@
 requests
 bs4
 pandas
-IPython.core.display
+IPython
 yfinance
 prophet
 streamlit
