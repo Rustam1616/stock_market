@@ -139,13 +139,13 @@ if st.sidebar.button('Start'):
                     hist = hist.drop(hist.tail(daysbefore+1-n).index)
                     price_old = round(hist.tail(1).iloc[(0,0)],ndigits=2)
                     if price_old > 5:
-                        kom1 = max(0.4 * inv / 100, 1)
+                        kom1 = max(0.4 * inv / 100, 1)*-1
                     else:
-                        kom1 = max(inv/price_old * 0.02, 0.3)
+                        kom1 = max(inv/price_old * 0.02, 0.3)*-1
                     if real > 5:
-                        kom2 = max(0.4 * inv/price_old*real / 100, 1)
+                        kom2 = max(0.4 * inv/price_old*real / 100, 1)*-1
                     else:
-                        kom2 = max(inv/price_old * 0.02, 0.3)
+                        kom2 = max(inv/price_old * 0.02, 0.3)*-1
                     kom = kom1+kom2
                     hist = hist.reset_index().rename(columns={'Date': 'ds', 'Close': 'y'})
                     hist['ds'] = hist['ds'].dt.tz_localize(None)
