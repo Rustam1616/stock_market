@@ -8,6 +8,8 @@ import yfinance as yf
 from prophet import Prophet
 import streamlit as st
 
+st.set_page_config(layout="wide")
+
 mark = BeautifulSoup(requests.get('https://companiesmarketcap.com/').text, 'html.parser')
 
 x=1
@@ -25,16 +27,20 @@ if proc == 'Test':
     ttype = st.sidebar.selectbox('Test type', ('Simple', 'Detailed'),index=0)
     predday = st.sidebar.slider('Sale after days', min_value=1, max_value=30)
     daysbefore = st.sidebar.slider('Start test from days before', min_value=predday, max_value=360)
-    testdays = st.sidebar.slider('How many days in a row to test', min_value=1, max_value=360)
+    testdays = st.sidebar.slider('How many days in a row to test', min_value=1, max_value=daysbefore-predday+1)
 
 else:
     predday = st.sidebar.slider('Sale after days', min_value=1, max_value=30)
+
+mon = st.sidebar.slider('Daily money to invest $', min_value=5, max_value=1000)
+firms = st.sidebar.selectbox('Number of daily invested companies', (1,2,3,4,5,6,7,8,9,10),index=0)
+inv = round(mon/firms,2)
 
 per1 = st.sidebar.slider('Period to analize', min_value=1, max_value=12)
 per2 = st.sidebar.selectbox('', ('y','mo'))
 per = str(per1)+per2
 
-ss = st.sidebar.slider('Sample size to analize', min_value=5, max_value=99)
+ss = st.sidebar.slider('Sample size to analize', min_value=firms+3, max_value=60)
 
 for nums in mark.find_all('td', attrs = {"td-right"}):
     nums = nums.get('data-sort')
@@ -90,8 +96,8 @@ if st.sidebar.button('Start'):
             pred_list.append(pred)
 
         df['Prediction'] = pred_list
-        df['Gain on 100$ pred'] = df['Prediction']*100/df['Price']-100
-        df = df.sort_values(by=['Country','Gain on 100$ pred'],ascending=False)
+        df['Gain on '+str(inv)+'$ pred'] = round(df['Prediction']*inv/df['Price']-inv,2)
+        df = df.sort_values(by=['Country','Gain on '+str(inv)+'$ pred'],ascending=False)
 
         st.markdown(df.to_html(escape=False),unsafe_allow_html=True)
  
@@ -144,16 +150,16 @@ if st.sidebar.button('Start'):
             ddf['Prediction'] = pred_list
             ddf['Real'] = real_list
             ddf['Price'] = price_old_list
-            ddf['Gain on 100$ pred'] = ddf['Prediction']*100/ddf['Price']-100
-            ddf['Gain on 100$ real'] = ddf['Real']*100/ddf['Price']-100
+            ddf['Gain on '+str(inv)+'$ pred'] = round(ddf['Prediction']*inv/ddf['Price']-inv,2)
+            ddf['Gain on '+str(inv)+'$ real'] = round(ddf['Real']*inv/ddf['Price']-inv,2)
             ddf = ddf.sort_values(by=['Country','Gain on 100$ pred'],ascending=False)
-            ddf = ddf.head(5)
-            note = 'Real gain '+str(daysbefore-predday+1-n)+' days before '+str(round(ddf['Gain on 100$ real'].sum(),2))
-            gain_list.append(round(ddf['Gain on 100$ real'].sum(),2))
+            ddf = ddf.head(firms)
+            note = 'Real gain '+str(daysbefore-predday+1-n)+' days before '+str(round(ddf['Gain on '+str(inv)+'$ real'].sum(),2))
+            gain_list.append(round(ddf['Gain on '+str(inv)+'$ real'].sum(),2))
             cum_list.append(sum(gain_list))
             if ttype == 'Detailed':
                 st.markdown(note)
-                st.markdown('Predicted gain'+ str(round(ddf['Gain on 100$ pred'].sum(),2)))
+                st.markdown('Predicted gain'+ str(round(ddf['Gain on '+str(inv)+'$ pred'].sum(),2)))
                 st.markdown(ddf.to_html(escape=False), unsafe_allow_html=True)
             else:
                 import datetime
