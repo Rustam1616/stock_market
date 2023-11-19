@@ -155,7 +155,7 @@ if st.sidebar.button('Start'):
             ddf['Price'] = price_old_list
             ddf['Gain on '+str(inv)+'$ pred'] = round(ddf['Prediction']*inv/ddf['Price']-inv,2)
             ddf['Gain on '+str(inv)+'$ real'] = round(ddf['Real']*inv/ddf['Price']-inv,2)
-            ddf = ddf.sort_values(by=['Country','Gain on 100$ pred'],ascending=False)
+            ddf = ddf.sort_values(by=['Country','Gain on '+str(inv)+'$ pred'],ascending=False)
             ddf = ddf.head(firms)
             note = 'Real gain '+str(daysbefore-predday+1-n)+' days before '+str(round(ddf['Gain on '+str(inv)+'$ real'].sum(),2))
             gain_list.append(round(ddf['Gain on '+str(inv)+'$ real'].sum(),2))
