@@ -133,7 +133,7 @@ if st.sidebar.button('Start'):
                     hist = hist.history(period=per)
                     hist = hist[['Close']]
                     real = round(hist.tail(daysbefore-predday+2-n).iloc[(0,0)],ndigits=2)
-                    hist = hist.drop(hist.tail(daysbefore-n).index)
+                    hist = hist.drop(hist.tail(daysbefore+1-n).index)
                     price_old = round(hist.tail(1).iloc[(0,0)],ndigits=2)
                     hist = hist.reset_index().rename(columns={'Date': 'ds', 'Close': 'y'})
                     hist['ds'] = hist['ds'].dt.tz_localize(None)
