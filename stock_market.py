@@ -132,7 +132,7 @@ if st.sidebar.button('Start'):
                     hist = yf.Ticker(cd)
                     hist = hist.history(period=per)
                     hist = hist[['Close']]
-                    real = round(hist.tail(daysbefore-predday+1-n).iloc[(0,0)],ndigits=2)
+                    real = round(hist.tail(daysbefore-predday+2-n).iloc[(0,0)],ndigits=2)
                     hist = hist.drop(hist.tail(daysbefore-n).index)
                     price_old = round(hist.tail(1).iloc[(0,0)],ndigits=2)
                     hist = hist.reset_index().rename(columns={'Date': 'ds', 'Close': 'y'})
