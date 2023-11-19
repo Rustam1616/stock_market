@@ -35,7 +35,7 @@ if proc == 'Test':
 else:
     predday = st.sidebar.slider('Sale after days', min_value=1, max_value=30)
 
-mon = st.sidebar.slider('Daily money to invest $', min_value=5, max_value=1000)
+mon = st.sidebar.slider('Daily money to invest $', min_value=5, max_value=2500)
 firms = st.sidebar.selectbox('Number of daily invested companies', (1,2,3,4,5,6,7,8,9,10),index=0)
 inv = round(mon/firms,2)
 
