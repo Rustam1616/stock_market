@@ -10,7 +10,7 @@ import streamlit as st
 
 st.set_page_config(layout="wide")
 
-mark = BeautifulSoup(requests.get('https://companiesmarketcap.com/').text, 'html.parser')
+mark = BeautifulSoup(requests.get('https://companiesmarketcap.com/usa/largest-companies-in-the-usa-by-market-cap/').text, 'html.parser')
 
 x=1
 y=2
