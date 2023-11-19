@@ -121,11 +121,14 @@ if st.sidebar.button('Start'):
         df = df[(df['Country'] == 'USA')]
         gain_list = []
         cum_list = []
+        exp_list = []
+        cum_exp_list = []
 
         for n in range(1, 1+testdays):
             pred_list = []
             real_list = []
             price_old_list = []
+            kom_list = []
             ddf = df.sample(ss).reset_index(drop=True) 
             for cd in ddf['Code']:
                 try:    
@@ -135,6 +138,15 @@ if st.sidebar.button('Start'):
                     real = round(hist.tail(daysbefore-predday+2-n).iloc[(0,0)],ndigits=2)
                     hist = hist.drop(hist.tail(daysbefore+1-n).index)
                     price_old = round(hist.tail(1).iloc[(0,0)],ndigits=2)
+                    if price_old > 5:
+                        kom1 = max(0.4 * inv / 100, 1)
+                    else:
+                        kom1 = max(inv/price_old * 0.02, 0.3)
+                    if real > 5:
+                        kom2 = max(0.4 * inv/price_old*real / 100, 1)
+                    else:
+                        kom2 = max(inv/price_old * 0.02, 0.3)
+                    kom = kom1+kom2
                     hist = hist.reset_index().rename(columns={'Date': 'ds', 'Close': 'y'})
                     hist['ds'] = hist['ds'].dt.tz_localize(None)
                     hist_model = Prophet(interval_width=0.95,yearly_seasonality=True, daily_seasonality=True)
@@ -146,13 +158,16 @@ if st.sidebar.button('Start'):
                     pred = 0
                     real = 0
                     price_old = 0
+                    kom = 0
                 pred_list.append(pred)
                 real_list.append(real)
                 price_old_list.append(price_old)
+                kom_list.append(kom)
 
             ddf['Prediction'] = pred_list
             ddf['Real'] = real_list
             ddf['Price'] = price_old_list
+            ddf['Commission'] = kom_list
             ddf['Gain on '+str(inv)+'$ pred'] = round(ddf['Prediction']*inv/ddf['Price']-inv,2)
             ddf['Gain on '+str(inv)+'$ real'] = round(ddf['Real']*inv/ddf['Price']-inv,2)
             ddf = ddf.sort_values(by=['Country','Gain on '+str(inv)+'$ pred'],ascending=False)
@@ -160,6 +175,8 @@ if st.sidebar.button('Start'):
             note = 'Real gain '+str(daysbefore-predday+1-n)+' days before '+str(round(ddf['Gain on '+str(inv)+'$ real'].sum(),2))
             gain_list.append(round(ddf['Gain on '+str(inv)+'$ real'].sum(),2))
             cum_list.append(sum(gain_list))
+            exp_list.append(round(ddf['Commission'].sum(),2))
+            cum_exp_list.append(sum(exp_list))
             if ttype == 'Detailed':
                 st.markdown(note)
                 st.markdown('Predicted gain'+ str(round(ddf['Gain on '+str(inv)+'$ pred'].sum(),2)))
@@ -178,6 +195,8 @@ if st.sidebar.button('Start'):
                 ndf = ndf.iloc[0:n]
                 ndf['Gain'] = gain_list
                 ndf['Cum'] = cum_list
+                ndf['Comm'] = exp_list
+                ndf['Total Comm'] = cum_exp_list
                 ndf = ndf.iloc[n-1:n]
                 
                 st.markdown(ndf.style.set_table_styles([{'selector': 'thead', 'props': [('display', 'none')]}]).to_html(escape=False), unsafe_allow_html=True)
