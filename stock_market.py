@@ -197,6 +197,7 @@ if st.sidebar.button('Start'):
                 ndf['Cum'] = cum_list
                 ndf['Comm'] = exp_list
                 ndf['Total Comm'] = cum_exp_list
+                ndf['Net'] = ndf['Cum'] + ndf['Total Comm']
                 ndf = ndf.iloc[n-1:n]
                 
                 st.markdown(ndf.style.set_table_styles([{'selector': 'thead', 'props': [('display', 'none')]}]).to_html(escape=False), unsafe_allow_html=True)
