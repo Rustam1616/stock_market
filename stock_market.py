@@ -47,6 +47,8 @@ ss = st.sidebar.slider('Sample size to analize', min_value=firms+3, max_value=60
 
 if ttype == 'Simple':
     st.markdown(pd.DataFrame(columns=['Sale date', 'Gain 1 day', 'Cum. gain', 'Commiss.', 'Cum com.', 'Net gain']).to_html(escape=False), unsafe_allow_html=True)
+else:
+    ''
 
 for nums in mark.find_all('td', attrs = {"td-right"}):
     nums = nums.get('data-sort')
