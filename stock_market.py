@@ -43,7 +43,7 @@ per1 = st.sidebar.slider('Period to analize', min_value=1, max_value=12)
 per2 = st.sidebar.selectbox('', ('y','mo'))
 per = str(per1)+per2
 
-ss = st.sidebar.slider('Sample size to analize', min_value=firms+3, max_value=60)
+ss = st.sidebar.slider('Sample size to analize', min_value=firms+3, max_value=99)
 
 if proc == 'Test':
     if ttype == 'Simple':
