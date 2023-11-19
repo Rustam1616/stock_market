@@ -46,7 +46,7 @@ per = str(per1)+per2
 ss = st.sidebar.slider('Sample size to analize', min_value=firms+3, max_value=60)
 
 if ttype == 'Simple':
-    st.markdown(pd.DataFrame(columns=['#','Date', 'Gain', 'Cum. gain', 'Comm.', 'Cum comm.', 'Net']).to_html(escape=False), unsafe_allow_html=True)
+    st.markdown(pd.DataFrame(columns=['Date of sale', 'Gain 1 day', 'Cum. gain', 'Commission', 'Cum comm.', 'Net gain']).to_html(escape=False), unsafe_allow_html=True)
 
 for nums in mark.find_all('td', attrs = {"td-right"}):
     nums = nums.get('data-sort')
