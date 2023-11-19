@@ -27,7 +27,10 @@ if proc == 'Test':
     ttype = st.sidebar.selectbox('Test type', ('Simple', 'Detailed'),index=0)
     predday = st.sidebar.slider('Sale after days', min_value=1, max_value=30)
     daysbefore = st.sidebar.slider('Start test from days before', min_value=predday, max_value=360)
-    testdays = st.sidebar.slider('How many days in a row to test', min_value=1, max_value=daysbefore-predday+1)
+    if daysbefore == predday:
+        testdays = 1
+    else:
+        testdays = st.sidebar.slider('How many days in a row to test', min_value=1, max_value=daysbefore-predday+1)
 
 else:
     predday = st.sidebar.slider('Sale after days', min_value=1, max_value=30)
