@@ -143,8 +143,8 @@ if st.sidebar.button('Start'):
             for cd in ddf['Code']:
                 # try:    
                 hist = yf.Ticker(cd)
-                hist = hist.history(start=datetime.today()-datetime.timedelta(days=daysbefore)-datetime.timedelta(days=per1*365 if per2 == 'y' else 12), 
-                                    end=datetime.today()-datetime.timedelta(days=daysbefore))
+                hist = hist.history(start=datetime.datetime.today()-datetime.timedelta(days=daysbefore)-datetime.timedelta(days=per1*365 if per2 == 'y' else 12), 
+                                    end=datetime.datetime.today()-datetime.timedelta(days=daysbefore))
                 hist = hist[['Close']]
                 hist = hist.resample('1D').mean().interpolate()
                 real = round(hist.tail(daysbefore-predday+2-n).iloc[(0,0)],ndigits=2)
