@@ -143,10 +143,10 @@ if st.sidebar.button('Start'):
             for cd in ddf['Code']:
                 # try:
                 if (datetime.datetime.today()-datetime.timedelta(
-                    days = daysbefore-1+n)).weekday() == 5 or (datetime.datetime.today()-datetime.timedelta(
-                        days = daysbefore-1+n)).weekday() == 6 or (datetime.datetime.today()-datetime.timedelta(
-                            days = daysbefore-predday-1+n)).weekday() == 5 or (datetime.datetime.today()-datetime.timedelta(
-                                days = daysbefore-predday-1+n)).weekday() == 6:
+                    days = daysbefore+1-n)).weekday() == 5 or (datetime.datetime.today()-datetime.timedelta(
+                        days = daysbefore+1-n)).weekday() == 6 or (datetime.datetime.today()-datetime.timedelta(
+                            days = daysbefore-predday+1-n)).weekday() == 5 or (datetime.datetime.today()-datetime.timedelta(
+                                days = daysbefore-predday+1-n)).weekday() == 6:
                     pred = 0
                     real = 0
                     price_old = 0
