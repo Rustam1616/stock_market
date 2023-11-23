@@ -223,7 +223,6 @@ if st.sidebar.button('Start'):
                 ndf['Net'] = ndf['Cum'] + ndf['Total Comm']
                 ndf = ndf.iloc[n-1:n]
                 
-                st.markdown(hist.to_html(escape=False), unsafe_allow_html=True)
                 st.markdown(ndf.style.set_table_styles([{'selector': 'thead', 'props': [('display', 'none')]}]).to_html(escape=False), unsafe_allow_html=True)
 
 
