@@ -157,7 +157,7 @@ if st.sidebar.button('Start'):
                         kom_list.append(kom)
                         continue    
                     hist = yf.Ticker(cd)
-                    hist = hist.history(start=datetime.datetime.today()-datetime.timedelta(days=daysbefore)-datetime.timedelta(days=per1*365 if per2 == 'y' else 12), 
+                    hist = hist.history(start=datetime.datetime.today()-datetime.timedelta(days=daysbefore)-datetime.timedelta(days=per1*365 if per2 == 'y' else 31), 
                                         end=datetime.datetime.today()-datetime.timedelta(days=daysbefore))
                     hist = hist[['Close']]
                     hist = hist.resample('1D').mean().interpolate()
