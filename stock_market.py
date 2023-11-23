@@ -144,6 +144,7 @@ if st.sidebar.button('Start'):
                     hist = yf.Ticker(cd)
                     hist = hist.history(period=per)
                     hist = hist[['Close']]
+                    hist = hist.resample('1D').mean().interpolate()
                     real = round(hist.tail(daysbefore-predday+2-n).iloc[(0,0)],ndigits=2)
                     hist = hist.drop(hist.tail(daysbefore+1-n).index)
                     price_old = round(hist.tail(1).iloc[(0,0)],ndigits=2)
