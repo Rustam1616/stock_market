@@ -141,7 +141,6 @@ if st.sidebar.button('Start'):
             kom_list = []
             ddf = df.sample(ss).reset_index(drop=True) 
             for cd in ddf['Code']:
-                # try:
                 if (datetime.datetime.today()-datetime.timedelta(
                     days = daysbefore+1-n)).weekday() == 5 or (datetime.datetime.today()-datetime.timedelta(
                         days = daysbefore+1-n)).weekday() == 6 or (datetime.datetime.today()-datetime.timedelta(
@@ -180,11 +179,7 @@ if st.sidebar.button('Start'):
                 hist_forecast = hist_model.make_future_dataframe(periods=predday, freq='D')
                 hist_forecast = hist_model.predict(hist_forecast)
                 pred = round(hist_forecast.tail(1).iloc[(0,1)],ndigits=2)
-                # except:
-                #     pred = 0
-                #     real = 0
-                #     price_old = 0
-                #     kom = 0
+
                 pred_list.append(pred)
                 real_list.append(real)
                 price_old_list.append(price_old)
@@ -228,6 +223,7 @@ if st.sidebar.button('Start'):
                 ndf['Net'] = ndf['Cum'] + ndf['Total Comm']
                 ndf = ndf.iloc[n-1:n]
                 
+                st.markdown(hist.to_html(escape=False), unsafe_allow_html=True)
                 st.markdown(ndf.style.set_table_styles([{'selector': 'thead', 'props': [('display', 'none')]}]).to_html(escape=False), unsafe_allow_html=True)
 
 
