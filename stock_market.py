@@ -8,7 +8,6 @@ import yfinance as yf
 from prophet import Prophet
 import streamlit as st
 import datetime
-from datetime import datetime, timedelta
 
 st.set_page_config(layout="wide")
 
@@ -144,8 +143,8 @@ if st.sidebar.button('Start'):
             for cd in ddf['Code']:
                 try:    
                     hist = yf.Ticker(cd)
-                    hist = hist.history(start=datetime.today()-timedelta(days=daysbefore)-timedelta(days=per1*365 if per2 == 'y' else 12), 
-                                        end=datetime.today()-timedelta(days=daysbefore))
+                    hist = hist.history(start=datetime.today()-datetime.timedelta(days=daysbefore)-datetime.timedelta(days=per1*365 if per2 == 'y' else 12), 
+                                        end=datetime.today()-datetime.timedelta(days=daysbefore))
                     hist = hist[['Close']]
                     hist = hist.resample('1D').mean().interpolate()
                     real = round(hist.tail(daysbefore-predday+2-n).iloc[(0,0)],ndigits=2)
@@ -195,7 +194,7 @@ if st.sidebar.button('Start'):
                 st.markdown('Predicted gain'+ str(round(ddf['Gain on '+str(inv)+'$ pred'].sum(),2)))
                 st.markdown(ddf.to_html(escape=False), unsafe_allow_html=True)
             else:
-                a = datetime.today()
+                a = datetime.datetime.today()
                 datelist = []
                 def rem_time(d):
                     s = ''
