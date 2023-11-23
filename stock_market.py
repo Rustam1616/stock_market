@@ -141,50 +141,50 @@ if st.sidebar.button('Start'):
             kom_list = []
             ddf = df.sample(ss).reset_index(drop=True) 
             for cd in ddf['Code']:
-                # try:
-                if (datetime.datetime.today()-datetime.timedelta(
-                    days = daysbefore+1-n)).weekday() == 5 or (datetime.datetime.today()-datetime.timedelta(
-                        days = daysbefore+1-n)).weekday() == 6 or (datetime.datetime.today()-datetime.timedelta(
-                            days = daysbefore-predday+1-n)).weekday() == 5 or (datetime.datetime.today()-datetime.timedelta(
-                                days = daysbefore-predday+1-n)).weekday() == 6:
+                try:
+                    if (datetime.datetime.today()-datetime.timedelta(
+                        days = daysbefore+1-n)).weekday() == 5 or (datetime.datetime.today()-datetime.timedelta(
+                            days = daysbefore+1-n)).weekday() == 6 or (datetime.datetime.today()-datetime.timedelta(
+                                days = daysbefore-predday+1-n)).weekday() == 5 or (datetime.datetime.today()-datetime.timedelta(
+                                    days = daysbefore-predday+1-n)).weekday() == 6:
+                        pred = 0
+                        real = 0
+                        price_old = 0
+                        kom = 0
+                        pred_list.append(pred)
+                        real_list.append(real)
+                        price_old_list.append(price_old)
+                        kom_list.append(kom)
+                        continue    
+                    hist = yf.Ticker(cd)
+                    hist = hist.history(start=datetime.datetime.today()-datetime.timedelta(days=daysbefore)-datetime.timedelta(days=per1*365 if per2 == 'y' else 12), 
+                                        end=datetime.datetime.today()-datetime.timedelta(days=daysbefore))
+                    hist = hist[['Close']]
+                    hist = hist.resample('1D').mean().interpolate()
+                    real = round(hist.tail(daysbefore-predday+2-n).iloc[(0,0)],ndigits=2)
+                    hist = hist.drop(hist.tail(daysbefore+1-n).index)
+                    price_old = round(hist.tail(1).iloc[(0,0)],ndigits=2)
+                    if price_old > 5:
+                        kom1 = max(0.4 * inv / 100, 1)*-1
+                    else:
+                        kom1 = max(inv/price_old * 0.02, 0.3)*-1
+                    if real > 5:
+                        kom2 = max(0.4 * inv/price_old*real / 100, 1)*-1
+                    else:
+                        kom2 = max(inv/price_old * 0.02, 0.3)*-1
+                    kom = kom1+kom2
+                    hist = hist.reset_index().rename(columns={'Date': 'ds', 'Close': 'y'})
+                    hist['ds'] = hist['ds'].dt.tz_localize(None)
+                    hist_model = Prophet(interval_width=0.95,yearly_seasonality=True, daily_seasonality=True)
+                    hist_model.fit(hist)
+                    hist_forecast = hist_model.make_future_dataframe(periods=predday, freq='D')
+                    hist_forecast = hist_model.predict(hist_forecast)
+                    pred = round(hist_forecast.tail(1).iloc[(0,1)],ndigits=2)
+                except:
                     pred = 0
                     real = 0
                     price_old = 0
                     kom = 0
-                    pred_list.append(pred)
-                    real_list.append(real)
-                    price_old_list.append(price_old)
-                    kom_list.append(kom)
-                    continue    
-                hist = yf.Ticker(cd)
-                hist = hist.history(start=datetime.datetime.today()-datetime.timedelta(days=daysbefore)-datetime.timedelta(days=per1*365 if per2 == 'y' else 12), 
-                                    end=datetime.datetime.today()-datetime.timedelta(days=daysbefore))
-                hist = hist[['Close']]
-                hist = hist.resample('1D').mean().interpolate()
-                real = round(hist.tail(daysbefore-predday+2-n).iloc[(0,0)],ndigits=2)
-                hist = hist.drop(hist.tail(daysbefore+1-n).index)
-                price_old = round(hist.tail(1).iloc[(0,0)],ndigits=2)
-                if price_old > 5:
-                    kom1 = max(0.4 * inv / 100, 1)*-1
-                else:
-                    kom1 = max(inv/price_old * 0.02, 0.3)*-1
-                if real > 5:
-                    kom2 = max(0.4 * inv/price_old*real / 100, 1)*-1
-                else:
-                    kom2 = max(inv/price_old * 0.02, 0.3)*-1
-                kom = kom1+kom2
-                hist = hist.reset_index().rename(columns={'Date': 'ds', 'Close': 'y'})
-                hist['ds'] = hist['ds'].dt.tz_localize(None)
-                hist_model = Prophet(interval_width=0.95,yearly_seasonality=True, daily_seasonality=True)
-                hist_model.fit(hist)
-                hist_forecast = hist_model.make_future_dataframe(periods=predday, freq='D')
-                hist_forecast = hist_model.predict(hist_forecast)
-                pred = round(hist_forecast.tail(1).iloc[(0,1)],ndigits=2)
-                # except:
-                #     pred = 0
-                #     real = 0
-                #     price_old = 0
-                #     kom = 0
                 pred_list.append(pred)
                 real_list.append(real)
                 price_old_list.append(price_old)
@@ -203,7 +203,9 @@ if st.sidebar.button('Start'):
             cum_list.append(sum(gain_list))
             exp_list.append(round(ddf['Commission'].sum(),2))
             cum_exp_list.append(sum(exp_list))
-            if ttype == 'Detailed':
+            if kom == 0:
+                pass
+            elif ttype == 'Detailed':
                 st.markdown(note)
                 st.markdown('Predicted gain'+ str(round(ddf['Gain on '+str(inv)+'$ pred'].sum(),2)))
                 st.markdown(ddf.to_html(escape=False), unsafe_allow_html=True)
