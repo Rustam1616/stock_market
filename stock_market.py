@@ -175,7 +175,7 @@ if st.sidebar.button('Start'):
                     kom = kom1+kom2
                     hist = hist.reset_index().rename(columns={'Date': 'ds', 'Close': 'y'})
                     hist['ds'] = hist['ds'].dt.tz_localize(None)
-                    hist_model = Prophet(interval_width=0.95,yearly_seasonality=True, daily_seasonality=True)
+                    hist_model = Prophet(interval_width=0.95,yearly_seasonality=True)
                     hist_model.fit(hist)
                     hist_forecast = hist_model.make_future_dataframe(periods=predday, freq='D')
                     hist_forecast = hist_model.predict(hist_forecast)
