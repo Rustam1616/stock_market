@@ -158,7 +158,7 @@ if st.sidebar.button('Start'):
                     continue    
                 hist = yf.Ticker(cd)
                 hist = hist.history(start=datetime.datetime.today()-datetime.timedelta(days=daysbefore)-datetime.timedelta(days=per1*365 if per2 == 'y' else per1*31), 
-                                    end=datetime.datetime.today()-datetime.timedelta(days=daysbefore))
+                                    end=datetime.datetime.today())
                 hist = hist[['Close']]
                 hist = hist.resample('1D').mean().interpolate()
                 real = round(hist.tail(daysbefore-predday+2-n).iloc[(0,0)],ndigits=2)
