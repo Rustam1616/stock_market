@@ -8,6 +8,7 @@ import yfinance as yf
 from prophet import Prophet
 import streamlit as st
 import datetime
+from datetime import datetime, timedelta
 
 st.set_page_config(layout="wide")
 
