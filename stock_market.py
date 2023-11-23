@@ -147,6 +147,14 @@ if st.sidebar.button('Start'):
                             days = daysbefore)).weekday() == 6 or (datetime.datetime.today()-datetime.timedelta(
                                 days = daysbefore-predday)).weekday() == 5 or (datetime.datetime.today()-datetime.timedelta(
                                     days = daysbefore-predday)).weekday() == 6:
+                        pred = 0
+                        real = 0
+                        price_old = 0
+                        kom = 0
+                        pred_list.append(pred)
+                        real_list.append(real)
+                        price_old_list.append(price_old)
+                        kom_list.append(kom)
                         continue    
                     hist = yf.Ticker(cd)
                     hist = hist.history(start=datetime.datetime.today()-datetime.timedelta(days=daysbefore)-datetime.timedelta(days=per1*365 if per2 == 'y' else 12), 
