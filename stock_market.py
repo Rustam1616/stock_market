@@ -194,6 +194,7 @@ if st.sidebar.button('Start'):
                 st.markdown('Predicted gain'+ str(round(ddf['Gain on '+str(inv)+'$ pred'].sum(),2)))
                 st.markdown(ddf.to_html(escape=False), unsafe_allow_html=True)
             else:
+                import datetime
                 a = datetime.datetime.today()
                 datelist = []
                 def rem_time(d):
