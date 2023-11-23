@@ -95,6 +95,7 @@ if st.sidebar.button('Start'):
                 hist = yf.Ticker(cd)
                 hist = hist.history(period=per)
                 hist = hist[['Close']]
+                hist = hist.resample('1D').mean().ffill()
                 hist = hist.reset_index().rename(columns={'Date': 'ds', 'Close': 'y'})
                 hist['ds'] = hist['ds'].dt.tz_localize(None)
                 hist_model = Prophet(interval_width=0.95,yearly_seasonality=True, daily_seasonality=True)
